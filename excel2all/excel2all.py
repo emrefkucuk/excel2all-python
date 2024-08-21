@@ -9,6 +9,7 @@ import pandas as pd
 import pyfiglet
 import json
 import xml.etree.ElementTree as elementTree
+import threading
 from openpyxl import load_workbook
 from reportlab.lib.pagesizes import A4, landscape
 from reportlab.lib import colors
@@ -238,11 +239,23 @@ def convert_excel(file_path, output_dir):
 
         base_name = os.path.splitext(os.path.basename(file_path))[0]
 
-        convert_to_csv(excel_data, output_dir, base_name)
-        convert_to_json(excel_data, output_dir, base_name)
-        convert_to_xml(excel_data, output_dir, base_name)
-        convert_to_html(excel_data, output_dir, base_name)
-        convert_to_pdf(file_path, output_dir, base_name)
+        # Create threads for each conversion function
+        threads = [
+            threading.Thread(target=convert_to_csv, args=(excel_data, output_dir, base_name)),
+            threading.Thread(target=convert_to_json, args=(excel_data, output_dir, base_name)),
+            threading.Thread(target=convert_to_xml, args=(excel_data, output_dir, base_name)),
+            threading.Thread(target=convert_to_html, args=(excel_data, output_dir, base_name)),
+            threading.Thread(target=convert_to_pdf, args=(file_path, output_dir, base_name))
+        ]
+
+        # Start all the threads
+        for thread in threads:
+            thread.start()
+
+        # Wait for all threads to complete
+        for thread in threads:
+            thread.join()
+
     except Exception as e:
         print(
             Color.ORANGE + f"Beklenmeyen bir hata yaşandı: {e}"
@@ -306,10 +319,9 @@ def main():
 
     welcome_string = (
     f"{Color.RESET}Hoş geldiniz. Bu program Excel ile uyumlu "
-    f"{Color.GREEN}(xls, xlsx, xlsm, xlsb) "
-    f"{Color.RESET}dosyaları "
-    f"{Color.ORANGE}json, csv, html, xml ve pdf "
-    f"{Color.RESET}dosyalarına dönüştürür.")
+    "(xls, xlsx, xlsm, xlsb) dosyaları "
+    "json, csv, html, xml ve pdf "
+    "dosyalarına dönüştürür.")
     print()
     print(Color.TURQ + ascii_banner + Color.RESET)
     print(welcome_string)
