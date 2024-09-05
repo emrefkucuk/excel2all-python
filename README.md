@@ -9,8 +9,8 @@ I made this terminal based Python script as an assignment during my internship i
 ## How it works
 - After running the script, you will be greeted with a welcome screen: _Press `1` to choose an Excel file, press `2` to exit_
 - Pressing `1` opens a dialog box prompting you to choose an Excel-compatible file (.xls, .xlsx, .xlsm, .xlsb).
-- After choosing, you will be prompted to choose a directory where a new directory will be created with the same name as your Excel spreadsheet.
-- After choosing, the program will run the necessary conversions. PDF conversion may take a while because it uses the `reportlab` library.
+- After choosing, you will be prompted to choose a location where a new directory will be created with the same name as your Excel spreadsheet.
+- After choosing, the program will run the necessary conversions. Keep in mind that PDF conversion may take longer than other conversions. Threading helped speed the conversions up a little bit.
 - After all the conversions are complete, you will get a message box informing you of the location of the new directory.
 - Now, you will be back at the beginning. Procceed or exit as you would like.
 
