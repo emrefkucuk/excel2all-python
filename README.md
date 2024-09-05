@@ -16,4 +16,6 @@ I made this terminal based Python script as an assignment during my internship i
 
 ## To-Do for me:
 - Add English language support
+- Allow more types of conversions (both from excel and from other formats)
+- Add options for conversions (encoding, size, orientation, etc.)
 - Fix text formatting and terminal colors
